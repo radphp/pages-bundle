@@ -1,0 +1,27 @@
+{
+    "name": "radphp/pages-bundle",
+    "type": "radphp-bundle",
+    "license": "MIT",
+    "description": "Pages bundle",
+    "keywords": ["RadPHP", "page", "bundle"],
+    "authors": [
+        {
+            "name": "Mohammad Abdoli Rad",
+            "email": "m.abdolirad@gmail.com",
+            "role": "Project Founder"
+        },
+        {
+            "name": "Omid Mottaghi Rad",
+            "email": "omidmr@gmail.com",
+            "role": "Project Founder"
+        }
+    ],
+    "require": {
+        "radphp/radphp": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pages\\": "."
+        }
+    }
+}

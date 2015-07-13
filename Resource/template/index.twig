@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="Pages">
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+
+    <script>
+        angular.module('Pages', ['ngRoute']).value('URL', '{{ generateUrl() }}');
+    </script>
+
+    <script src="http://127.0.0.1/Pages/js/angular/Pages.js"></script>
+    <script src="http://127.0.0.1/Pages/js/angular/PagesController.js"></script>
+
+    <script>
+        angular.module('Pages')
+        .config(function($routeProvider, $httpProvider) {
+            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            $routeProvider
+                {% for page in pages %}
+                .when('/pages/{{ page }}', {
+                    templateUrl : 'pages/{{ page }}',
+                    controller  : 'PagesController'
+                })
+                {% endfor %}
+                ;
+        });
+    </script>
+    <title>Pages</title>
+</head>
+
+<body ng-controller="PagesController">
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Homepage</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% for page in pages %}
+                <li><a href="#pages/{{ page }}"><i class="fa fa-star"></i> {{ page|capitalize }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
+
+<div id="main">
+    <div ng-view></div>
+</div>
+
+<footer class="text-center">
+    <p>Proudly developed by <a href="https://github.com/radphp/radphp">RadPHP</a> framework.</p>
+</footer>
+
+</body>
+</html>
