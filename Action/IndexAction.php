@@ -1,7 +1,10 @@
 <?php
 
 namespace Pages\Action;
+
 use App\Action\AppAction;
+use Cake\ORM\TableRegistry;
+use Rad\Events\Event;
 
 /**
  * Index Action
@@ -10,39 +13,64 @@ use App\Action\AppAction;
  */
 class IndexAction extends AppAction
 {
-    private $prefix = __DIR__ . '/../Resource/template/pages/';
+    /**
+     * @var \Cake\ORM\Table $pagesTable
+     */
+    private $pagesTable;
+
+    public function beforeWebMethod(Event $event)
+    {
+        $this->pagesTable = TableRegistry::get('Pages.Pages');
+
+        parent::beforeWebMethod($event);
+    }
 
     public function getMethod($slug = '')
     {
         if ($this->getRequest()->isAjax()) {
             if ($slug) {
-                $page = 'pages/' . $slug . '.twig';
+                $page = $this->pagesTable->find()
+                    ->where(['slug' => $slug])
+                    ->first();
                 $this->getResponder()->setData('page', $page);
 
                 return;
             }
         }
 
-        $pages = glob($this->prefix . '*.twig');
-        foreach ($pages as $i => $page) {
-            $pages[$i] = pathinfo($page, PATHINFO_FILENAME);
-        }
-
+        $pages = $this->pagesTable->find();
         $this->getResponder()->setData('pages', $pages);
     }
 
     public function postMethod($slug)
     {
-        file_put_contents($this->prefix . $slug . '.twig', $this->getRequest()->getPost('body'));
+        $page = $this->pagesTable->newEntity(
+            [
+                'slug' => $slug,
+                'title' => $this->getRequest()->getPost('title'),
+                'body' => $this->getRequest()->getPost('body'),
+            ]
+        );
+
+        $this->pagesTable->save($page);
     }
 
-    public function putMethod($slug)
+    public function putMethod($id)
     {
-        file_put_contents($this->prefix . $slug . '.twig', $this->getRequest()->getPost('body'));
+        $page = $this->pagesTable->newEntity(
+            [
+                'id' => $id,
+                'slug' => $this->getRequest()->getPost('slug'),
+                'title' => $this->getRequest()->getPost('title'),
+                'body' => $this->getRequest()->getPost('body'),
+            ]
+        );
+
+        $this->pagesTable->save($page);
     }
 
-    public function deleteMethod($slug)
+    public function deleteMethod($id)
     {
-        unlink($this->prefix . $slug . '.twig');
+        //$this->pagesTable->deleteAll(['id' => $id]);
     }
 }

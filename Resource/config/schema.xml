@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <table name="pages" alias="Pages" tableClass="Pages\Domain\Table\PagesTable"
+           entityClass="Pages\Domain\Entity\Page">
+        <column name="id" type="biginteger" null="false"/>
+        <column name="slug" type="string" null="false"/>
+        <column name="title" type="string"/>
+        <column name="body" type="text"/>
+        <column name="created_at" type="datetime"/>
+        <column name="updated_at" type="datetime"/>
+
+        <unique>
+            <unique-column name="slug"/>
+        </unique>
+        <primary>
+            <primary-column name="id"/>
+        </primary>
+        <index>
+            <index-column name="created_at"/>
+        </index>
+        <index>
+            <index-column name="updated_at"/>
+        </index>
+    </table>
+</database>

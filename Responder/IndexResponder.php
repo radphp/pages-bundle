@@ -21,10 +21,12 @@ class IndexResponder extends AppResponder
             if ($pages = $this->getData('pages', false)) {
                 $content = json_encode(['pages' => $pages]);
             } elseif ($page = $this->getData('page', false)) {
-                $content = $twig->render('@Pages/' . $page);
+                $page = $this->getData('page', []);
+
+                $content = $twig->render('@Pages/pages.twig', ['page' => $page]);
             }
         } else {
-            $pages = $this->getData('pages', false);
+            $pages = $this->getData('pages', []);
             $content = $twig->render('@Pages/index.twig', ['pages' => $pages]);
         }
 

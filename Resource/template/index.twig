@@ -21,9 +21,9 @@
             $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             $routeProvider
                 {% for page in pages %}
-                .when('/pages/{{ page }}', {
-                    templateUrl : 'pages/{{ page }}',
-                    controller  : 'PagesController'
+                .when('/pages/{{ page.slug }}', {
+                    templateUrl : 'pages/{{ page.slug }}',
+                    controller  : 'PagesController(\'download\', {{ page.id }})'
                 })
                 {% endfor %}
                 ;
@@ -42,9 +42,11 @@
 
         <ul class="nav navbar-nav navbar-right">
             {% for page in pages %}
-                <li><a href="#pages/{{ page }}"><i class="fa fa-star"></i> {{ page|capitalize }}</a></li>
+                <li><a href="#pages/{{ page.slug }}"><i class="fa fa-star"></i> {{ page.title|capitalize }}</a></li>
             {% endfor %}
         </ul>
+
+        <button ng-click="PagesController('delete', ## id ##)">Delete</button>
     </div>
 </nav>
 
