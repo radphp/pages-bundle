@@ -42,13 +42,15 @@ class IndexAction extends AppAction
         $this->getResponder()->setData('pages', $pages);
     }
 
-    public function postMethod($slug)
+    public function postMethod()
     {
+        var_dump($this->getRequest()->getRawBody());die;
+        var_dump($this->getRequest()->getPut('slug'));die;
         $page = $this->pagesTable->newEntity(
             [
-                'slug' => $slug,
-                'title' => $this->getRequest()->getPost('title'),
-                'body' => $this->getRequest()->getPost('body'),
+                'slug' => $this->getRequest()->getPut('slug'),
+                'title' => $this->getRequest()->getPut('title'),
+                'body' => $this->getRequest()->getPut('body'),
             ]
         );
 
@@ -60,17 +62,21 @@ class IndexAction extends AppAction
         $page = $this->pagesTable->newEntity(
             [
                 'id' => $id,
-                'slug' => $this->getRequest()->getPost('slug'),
-                'title' => $this->getRequest()->getPost('title'),
-                'body' => $this->getRequest()->getPost('body'),
+                'title' => $this->getRequest()->getPut('title'),
+                'body' => $this->getRequest()->getPut('body'),
             ]
         );
 
         $this->pagesTable->save($page);
+
+        $page = $this->pagesTable->find()
+            ->where(['id' => $id])
+            ->first();
+        $this->getResponder()->setData('page', $page);
     }
 
     public function deleteMethod($id)
     {
-        //$this->pagesTable->deleteAll(['id' => $id]);
+        $this->pagesTable->deleteAll(['id' => $id]);
     }
 }

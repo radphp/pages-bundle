@@ -12,39 +12,32 @@ class IndexResponder extends AppResponder
 {
     public function getMethod()
     {
-        $content = '';
+        $template = '';
+        $params = [];
 
-        /** @var \Twig_Environment $twig */
-        $twig = $this->getContainer()->get('twig');
-
-        if ($this->getRequest()->isAjax()) {
-            if ($pages = $this->getData('pages', false)) {
-                $content = json_encode(['pages' => $pages]);
-            } elseif ($page = $this->getData('page', false)) {
-                $page = $this->getData('page', []);
-
-                $content = $twig->render('@Pages/pages.twig', ['page' => $page]);
-            }
-        } else {
-            $pages = $this->getData('pages', []);
-            $content = $twig->render('@Pages/index.twig', ['pages' => $pages]);
+        if ($pages = $this->getData('pages', [])) {
+            $params = ['pages' => $pages];
+            $template = '@Pages/index.twig';
+        } elseif ($page = $this->getData('page', [])) {
+            $params = ['page' => $page];
+            $template = '@Pages/pages.twig';
         }
 
-        $this->getResponse()->setContent($content);
+        $this->setContent($template, $params);
     }
 
     public function postMethod()
     {
-        $this->getResponse()->setContent('OK');
+        $this->setRawContent('OK');
     }
 
     public function putMethod()
     {
-        $this->getResponse()->setContent('OK');
+        $this->getMethod();
     }
 
     public function deleteMethod()
     {
-        $this->getResponse()->setContent('OK');
+        $this->postMethod();
     }
 }

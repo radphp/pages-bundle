@@ -4,31 +4,19 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
 
+    <link rel="stylesheet" href="http://127.0.0.1/Pages/css/Pages.css" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
 
     <script>
-        angular.module('Pages', ['ngRoute']).value('URL', '{{ generateUrl() }}');
+        angular.module('Pages', []).value('URL', '{{ generateUrl() }}');
     </script>
 
     <script src="http://127.0.0.1/Pages/js/angular/Pages.js"></script>
     <script src="http://127.0.0.1/Pages/js/angular/PagesController.js"></script>
 
-    <script>
-        angular.module('Pages')
-        .config(function($routeProvider, $httpProvider) {
-            $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-            $routeProvider
-                {% for page in pages %}
-                .when('/pages/{{ page.slug }}', {
-                    templateUrl : 'pages/{{ page.slug }}',
-                    controller  : 'PagesController(\'download\', {{ page.id }})'
-                })
-                {% endfor %}
-                ;
-        });
-    </script>
     <title>Pages</title>
 </head>
 
@@ -42,16 +30,22 @@
 
         <ul class="nav navbar-nav navbar-right">
             {% for page in pages %}
-                <li><a href="#pages/{{ page.slug }}"><i class="fa fa-star"></i> {{ page.title|capitalize }}</a></li>
+                <li><a ng-click="get('/{{ page.slug }}')"><i class="fa fa-star"></i> {{ page.title|capitalize }}</a></li>
             {% endfor %}
         </ul>
 
-        <button ng-click="PagesController('delete', ## id ##)">Delete</button>
+        <button ng-click="insert()">New</button>
+        <button ng-click="update()">Update</button>
+        <button ng-click="delete()">Delete</button>
     </div>
 </nav>
 
 <div id="main">
-    <div ng-view></div>
+    <div class="jumbotron text-center">
+        <h1>## page.title ##</h1>
+
+        ## page.body ##
+    </div>
 </div>
 
 <footer class="text-center">
