@@ -31,7 +31,7 @@ angular.module('Pages')
             if (confirm('Add?')) {
                 var link = URL;
 
-                var params = $httpParamSerializer({'slug': slug, 'title': title, 'body': body});
+                var params = {'slug': slug, 'title': title, 'body': body};
                 $http.post(link, params)
                     .success(function () {
                         alert('Added successfully');
@@ -47,7 +47,7 @@ angular.module('Pages')
             if (confirm('Update?')) {
                 var link = URL + '/' + $scope.page.id;
 
-                var params = $httpParamSerializer({'title': title, 'body': body});
+                var params = {'title': title, 'body': body};
                 $http.put(link, params)
                     .success(function (response) {
                         $scope.page = response.page;

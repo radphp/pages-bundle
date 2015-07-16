@@ -44,13 +44,11 @@ class IndexAction extends AppAction
 
     public function postMethod()
     {
-        var_dump($this->getRequest()->getRawBody());die;
-        var_dump($this->getRequest()->getPut('slug'));die;
         $page = $this->pagesTable->newEntity(
             [
-                'slug' => $this->getRequest()->getPut('slug'),
-                'title' => $this->getRequest()->getPut('title'),
-                'body' => $this->getRequest()->getPut('body'),
+                'slug' => $this->getRequest()->getPost('slug'),
+                'title' => $this->getRequest()->getPost('title'),
+                'body' => $this->getRequest()->getPost('body'),
             ]
         );
 
