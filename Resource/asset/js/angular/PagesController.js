@@ -1,7 +1,7 @@
 angular.module('Pages')
-    .controller('PagesController', function(URL, $scope, $http, $location, $httpParamSerializer) {
+    .controller('PagesController', function(URL, page, $scope, $http, $location) {
         $scope.get = function(link) {
-            var link = URL + link;
+            link = URL + '/' + link;
 
             $http.get(link)
                 .success(function (response) {
@@ -58,5 +58,5 @@ angular.module('Pages')
         };
 
         // default action
-        $scope.get($location.path());
+        $scope.get(page);
     });

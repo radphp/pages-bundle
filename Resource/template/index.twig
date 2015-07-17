@@ -11,7 +11,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
 
     <script>
-        angular.module('Pages', []).value('URL', '{{ generateUrl() }}');
+        angular.module('Pages', [])
+                .value('URL', '{{ generateUrl(['pages'], false) }}')
+                .value('page', '{{ page }}');
     </script>
 
     <script src="http://127.0.0.1/Pages/js/angular/Pages.js"></script>
@@ -30,7 +32,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             {% for page in pages %}
-                <li><a ng-click="get('/{{ page.slug }}')"><i class="fa fa-star"></i> {{ page.title|capitalize }}</a></li>
+                <li><a ng-click="get('{{ page.slug }}')"><i class="fa fa-star"></i> {{ page.title|capitalize }}</a></li>
             {% endfor %}
         </ul>
 
@@ -42,9 +44,9 @@
 
 <div id="main">
     <div class="jumbotron text-center">
-        <h1>## page.title ##</h1>
+        <h1 ng-bind="page.title"></h1>
 
-        ## page.body ##
+        <div ng-bind="page.body"></div>
     </div>
 </div>
 

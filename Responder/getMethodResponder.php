@@ -8,15 +8,15 @@ use App\Responder\AppResponder;
  *
  * @package Pages\Responder
  */
-class IndexResponder extends AppResponder
+class getMethodResponder extends AppResponder
 {
-    public function getMethod()
+    public function __invoke()
     {
         $template = '';
         $params = [];
 
         if ($pages = $this->getData('pages', [])) {
-            $params = ['pages' => $pages];
+            $params = ['pages' => $pages, 'page' => $this->getData('page')];
             $template = '@Pages/index.twig';
         } elseif ($page = $this->getData('page', [])) {
             $params = ['page' => $page];
@@ -24,20 +24,5 @@ class IndexResponder extends AppResponder
         }
 
         $this->setContent($template, $params);
-    }
-
-    public function postMethod()
-    {
-        $this->setRawContent('OK');
-    }
-
-    public function putMethod()
-    {
-        $this->getMethod();
-    }
-
-    public function deleteMethod()
-    {
-        $this->postMethod();
     }
 }
