@@ -8,7 +8,7 @@ use App\Responder\AppResponder;
  *
  * @package Pages\Responder
  */
-class postMethodResponder extends AppResponder
+class DeleteMethodResponder extends AppResponder
 {
     public function __invoke()
     {

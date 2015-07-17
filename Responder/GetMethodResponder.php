@@ -8,7 +8,7 @@ use App\Responder\AppResponder;
  *
  * @package Pages\Responder
  */
-class getMethodResponder extends AppResponder
+class GetMethodResponder extends AppResponder
 {
     public function __invoke()
     {

@@ -10,7 +10,7 @@ use Cake\ORM\TableRegistry;
  *
  * @package Pages\Action
  */
-class deleteMethodAction extends AppAction
+class DeleteMethodAction extends AppAction
 {
     public function __invoke($id)
     {

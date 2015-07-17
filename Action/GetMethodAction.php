@@ -10,7 +10,7 @@ use Cake\ORM\TableRegistry;
  *
  * @package Pages\Action
  */
-class getMethodAction extends AppAction
+class GetMethodAction extends AppAction
 {
     public function __invoke($slug = '')
     {

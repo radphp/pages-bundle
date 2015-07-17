@@ -10,7 +10,7 @@ use Cake\ORM\TableRegistry;
  *
  * @package Pages\Action
  */
-class putMethodAction extends AppAction
+class PutMethodAction extends AppAction
 {
     public function __invoke($id)
     {

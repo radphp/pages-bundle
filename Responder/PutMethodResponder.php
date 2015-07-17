@@ -8,7 +8,7 @@ use App\Responder\AppResponder;
  *
  * @package Pages\Responder
  */
-class putMethodResponder extends AppResponder
+class PutMethodResponder extends AppResponder
 {
     public function __invoke()
     {
