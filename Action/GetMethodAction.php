@@ -17,19 +17,17 @@ class GetMethodAction extends AppAction
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
 
+        $page = [];
         if ($this->getRequest()->isAjax()) {
             if ($slug) {
                 $page = $pagesTable->find()
                     ->where(['slug' => $slug])
                     ->first();
-                $this->getResponder()->setData('page', $page);
-
-                return;
             }
         }
 
         $pages = $pagesTable->find();
         $this->getResponder()->setData('pages', $pages);
-        $this->getResponder()->setData('page', $slug);
+        $this->getResponder()->setData('page', $page);
     }
 }
