@@ -1,6 +1,8 @@
 angular.module('Pages')
     .controller('PagesController', function(URL, page, $scope, $http, $location) {
         $scope.get = function(link) {
+            $location.path(link).replace();
+
             link = URL + '/' + link;
 
             $http.get(link)
