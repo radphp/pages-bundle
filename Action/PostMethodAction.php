@@ -19,9 +19,9 @@ class PostMethodAction extends AppAction
 
         $page = $pagesTable->newEntity(
             [
-                'slug' => $this->getRequest()->getPost('slug'),
-                'title' => $this->getRequest()->getPost('title'),
-                'body' => $this->getRequest()->getPost('body'),
+                'slug' => $this->getRequest()->getParsedBody()['slug'],
+                'title' => $this->getRequest()->getParsedBody()['title'],
+                'body' => $this->getRequest()->getParsedBody()['body'],
             ]
         );
 

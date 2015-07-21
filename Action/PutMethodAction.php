@@ -20,8 +20,8 @@ class PutMethodAction extends AppAction
         $page = $pagesTable->newEntity(
             [
                 'id' => $id,
-                'title' => $this->getRequest()->getPut('title'),
-                'body' => $this->getRequest()->getPut('body'),
+                'title' => $this->getRequest()->getParsedBody()['title'],
+                'body' => $this->getRequest()->getParsedBody()['body'],
             ]
         );
 
