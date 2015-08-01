@@ -1,30 +1,11 @@
-<!DOCTYPE html>
-<html lang="en-US" ng-app="Pages">
-<head>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+{% extends getMasterTwig() %}
 
-    <link rel="stylesheet" href="http://127.0.0.1/Pages/css/Pages.css" />
+{% block title %}Pages{% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+{% block base %}{{ generateUrl(['pages'], false, true, false) }}/{% endblock %}
 
-    <script>
-        angular.module('Pages', [])
-                .value('URL', '{{ generateUrl(['pages'], false) }}')
-                .value('page', '{{ page.slug }}');
-    </script>
-
-    <script src="http://127.0.0.1/Pages/js/angular/Pages.js"></script>
-    <script src="http://127.0.0.1/Pages/js/angular/PagesController.js"></script>
-
-    <base href="{{ generateUrl(['pages'], false, true, false) }}/">
-
-    <title>Pages</title>
-</head>
-
-<body ng-controller="PagesController">
+{% block content %}
+<body ng-app="Pages" ng-controller="PagesController">
 
 <nav class="navbar navbar-default">
     <div class="container">
@@ -56,9 +37,4 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <p>Proudly developed by <a href="https://github.com/radphp/radphp">RadPHP</a> framework.</p>
-</footer>
-
-</body>
-</html>
+{% endblock %}
