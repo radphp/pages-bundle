@@ -1,7 +1,0 @@
-{% for page in pages %}
-    <li>
-        <a href="{{ generateUrl(['pages'], false) }}/{{ page.slug }}">
-            <i class="fa fa-star"></i> {{ page.title|capitalize }}
-        </a>
-    </li>
-{% endfor %}

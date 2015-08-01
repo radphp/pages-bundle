@@ -17,11 +17,7 @@ class GetMethodResponder extends AppResponder
             $template = '@Pages/pages.twig';
         } else {
             $params = ['pages' => $this->getData('pages', []), 'page' => $this->getData('page')];
-            if ($this->getRequest()->getQuery('inline')){
-                $template = '@Pages/inline.twig';
-            } else {
-                $template = '@Pages/index.twig';
-            }
+            $template = '@Pages/index.twig';
         }
 
         $this->setContent($template, $params);

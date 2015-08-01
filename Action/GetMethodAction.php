@@ -32,7 +32,6 @@ class GetMethodAction extends AppAction
         $this->getResponder()->setData('pages', $pages);
         $this->getResponder()->setData('page', $page);
 
-        //
         TwigHelper::addJs('angular
             .module("Pages", [])
             .value("URL", "' . $this->getRouter()->generateUrl('pages', [Router::GEN_OPT_WITH_PARAMS => false]) . '")
