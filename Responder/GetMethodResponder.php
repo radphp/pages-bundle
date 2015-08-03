@@ -12,11 +12,11 @@ class GetMethodResponder extends AppResponder
 {
     public function __invoke()
     {
-        if ($this->getRequest()->isAjax()) {
-            $params = ['page' => $this->getData('page', [])];
+        if ($page = $this->getData('page', [])) {
+            $params = ['page' => $page];
             $template = '@Pages/pages.twig';
         } else {
-            $params = ['pages' => $this->getData('pages', []), 'page' => $this->getData('page')];
+            $params = ['table' => $this->getData('table', '')];
             $template = '@Pages/index.twig';
         }
 

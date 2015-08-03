@@ -1,40 +1,13 @@
 {% extends getMasterTwig() %}
 
-{% block title %}Pages{% endblock %}
+{% set title = 'Pages' %}
 
 {% block base %}{{ generateUrl(['pages'], false, true, false) }}/{% endblock %}
 
 {% block content %}
-<body ng-app="Pages" ng-controller="PagesController">
-
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Homepage</a>
+    <div id="main">
+        <div>
+            {{ table|raw }}
         </div>
-
-        <ul class="nav navbar-nav navbar-right">
-            {% for page in pages %}
-                <li>
-                    <a ng-click="get('{{ page.slug }}')" href="{{ generateUrl(['pages'], false) }}/{{ page.slug }}">
-                        <i class="fa fa-star"></i> {{ page.title|capitalize }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-
-        <button ng-click="insert()">New</button>
-        <button ng-click="update()">Update</button>
-        <button ng-click="delete()">Delete</button>
     </div>
-</nav>
-
-<div id="main">
-    <div class="jumbotron text-center">
-        <h1 ng-bind="page.title">{{ page.title }}</h1>
-
-        <div ng-bind="page.body">{{ page.body }}</div>
-    </div>
-</div>
-
 {% endblock %}
