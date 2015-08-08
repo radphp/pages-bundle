@@ -19,6 +19,7 @@
     "require": {
         "radphp/radphp": "dev-master",
         "radphp/cake-orm-bundle": "dev-master",
+        "radphp/twig": "dev-master",
         "atkrad/data-tables": "dev-master"
     },
     "autoload": {
