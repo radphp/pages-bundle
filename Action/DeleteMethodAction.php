@@ -4,6 +4,7 @@ namespace Pages\Action;
 
 use App\Action\AppAction;
 use Cake\ORM\TableRegistry;
+use Rad\Network\Http\Response;
 
 /**
  * Index Action
@@ -17,6 +18,6 @@ class DeleteMethodAction extends AppAction
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
 
-        $pagesTable->deleteAll(['id' => $id]);
+        return new Response($pagesTable->deleteAll(['id' => $id]));
     }
 }

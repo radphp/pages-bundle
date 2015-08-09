@@ -8,16 +8,17 @@ use App\Responder\AppResponder;
  *
  * @package Pages\Responder
  */
-class CreateResponder extends AppResponder
+class NewResponder extends AppResponder
 {
     public function getMethod()
     {
         $form = $this->getData('form');
 
-        $this->setContent(
+        return $this->render(
             '@App/simpleform.twig',
             [
                 'form' => $form->createView(),
+                'title' => 'Add a new page',
             ]
         );
     }

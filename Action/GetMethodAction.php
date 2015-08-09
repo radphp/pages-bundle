@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 use DataTable\Column;
 use DataTable\DataSource\ServerSide\CakePHP;
 use DataTable\Table;
-use Rad\Routing\Router;
+use Pages\Library\Form;
 use Twig\Library\Helper as TwigHelper;
 
 /**
@@ -18,19 +18,54 @@ use Twig\Library\Helper as TwigHelper;
  */
 class GetMethodAction extends AppAction
 {
-    public function __invoke($slug = '', $action = '')
+    public function __invoke($id = '', $action = '')
+    {
+
+        switch ($action) {
+            case 'edit':
+                $this->edit($id);
+                break;
+            default:
+                $this->generateDatatable($id);
+        }
+    }
+
+    private function edit($id)
+    {
+        $pagesTable = TableRegistry::get('Pages.Pages');
+
+        $page = $pagesTable->find()
+            ->where(['id' => $id])
+            ->first();
+
+        $this->getResponder()->setData('form', Form::getForm($page));
+    }
+
+    private function generateDatatable($id)
     {
         TwigHelper::addCss('file:///Admin/vendor/datatables/media/css/jquery.dataTables.min.css', 100);
         TwigHelper::addJs('file:///Admin/vendor/jquery/dist/jquery.min.js', 20);
         TwigHelper::addJs('file:///Admin/vendor/datatables/media/js/jquery.dataTables.min.js', 100);
+        TwigHelper::addJs('
+        function deletePage(id) {
+    if (confirm(\'Delete this user?\')) {
+        $.ajax({
+            type: "DELETE",
+            url: \'pages/\' + id,
+            success: function(affectedRows) {
+                if (affectedRows > 0) window.location = \'pages\';
+            }
+        });
+    }
+}', 110);
 
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
 
         $page = [];
-        if ($slug) {
+        if ($id) {
             $page = $pagesTable->find()
-                ->where(['slug' => $slug])
+                ->where(['id' => $id])
                 ->first();
         }
 
@@ -51,23 +86,22 @@ class GetMethodAction extends AppAction
 
         $col = new Column\Action();
         $col->setManager(
-                function (Column\ActionBuilder $action, Entity $page) use ($router) {
-                    if (/* hasAdminAcl */ true) {
-                        $action->addAction(
-                            'edit',
-                            'Edit',
-                            $router->generateUrl(['pages', $page->get('id'), 'edit'])
-                        );
+            function (Column\ActionBuilder $action, Entity $page) use ($router) {
+                if (/* hasAdminAcl */ true) {
+                    $action->addAction(
+                        'edit',
+                        'Edit',
+                        $router->generateUrl(['pages', $page->get('id'), 'edit'])
+                    );
 
-                        //$action->addAction(
-                        //    'delete',
-                        //    'Delete',
-                        //    Router::url(['controller' => 'Repositories', 'action' => 'delete', $page->getId()]),
-                        //    ['title' => 'Delete “{0}” key(s)', $page->getTitle(), 'rel' => 'permalink']
-                        //);
-                    }
+                    $action->addAction(
+                        'delete',
+                        'Delete',
+                        'javascript:deletePage("' . $page->get('id') . '");'
+                    );
                 }
-            )
+            }
+        )
             ->setTitle('Actions');
         $table->addColumn($col);
 
@@ -80,6 +114,5 @@ class GetMethodAction extends AppAction
         $this->getResponder()->setData('table', $table->render());
         $this->getResponder()->setData('pages', $pages);
         $this->getResponder()->setData('page', $page);
-
     }
 }

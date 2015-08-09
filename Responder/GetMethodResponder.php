@@ -12,6 +12,17 @@ class GetMethodResponder extends AppResponder
 {
     public function __invoke()
     {
+        // if it is edit form
+        if ($form = $this->getData('form', false)) {
+            return $this->render(
+                '@App/simpleform.twig',
+                [
+                    'form' => $form->createView(),
+                    'title' => 'Edit a page',
+                ]
+            );
+        }
+
         if ($page = $this->getData('page', [])) {
             $params = ['page' => $page];
             $template = '@Pages/pages.twig';
@@ -20,6 +31,6 @@ class GetMethodResponder extends AppResponder
             $template = '@Pages/index.twig';
         }
 
-        $this->setContent($template, $params);
+        return $this->render($template, $params);
     }
 }
