@@ -1,7 +1,7 @@
 <?php
 
 Cake\ORM\TableRegistry::config(
-    'Pages.Categories',
+    'Pages.Pages',
     [
         'table' => 'pages',
         'alias' => 'Pages',

@@ -23,9 +23,13 @@ class Form
         if ($page) {
             $data = $page->toArray();
         }
+
+        $action = $page ? Container::get('router')->generateUrl(['pages', $data['id']]) :
+            Container::get('router')->generateUrl(['pages']);
+
         $formFactory = Forms::createFormFactory();
         $options = [
-            'action' => Container::get('router')->generateUrl(['pages', $data['id']]),
+            'action' => $action,
             'method' => $page ? 'PUT' : 'POST'
         ];
 
