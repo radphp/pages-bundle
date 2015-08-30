@@ -5,6 +5,7 @@ namespace Pages\Action;
 use App\Action\AppAction;
 use Cake\ORM\TableRegistry;
 use Rad\Network\Http\Response;
+use Rad\Network\Http\Response\RedirectResponse;
 
 /**
  * Index Action
@@ -13,6 +14,11 @@ use Rad\Network\Http\Response;
  */
 class PostMethodAction extends AppAction
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @return RedirectResponse
+     */
     public function __invoke()
     {
         /** @var \Cake\ORM\Table $pagesTable */
@@ -30,6 +36,6 @@ class PostMethodAction extends AppAction
         $pagesTable->save($page);
 
         // redirect to last page
-        return (new Response())->redirect($this->getRouter()->generateUrl(['pages']));
+        return new RedirectResponse($this->getRouter()->generateUrl(['pages']));
     }
 }
