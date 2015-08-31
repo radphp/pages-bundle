@@ -30,6 +30,6 @@ class PutMethodAction extends AppAction
         $pagesTable->save($page);
 
         // redirect to last page
-        return (new Response())->redirect($this->getRouter()->generateUrl(['pages']));
+        return new RedirectResponse($this->getRouter()->generateUrl(['pages']));
     }
 }
