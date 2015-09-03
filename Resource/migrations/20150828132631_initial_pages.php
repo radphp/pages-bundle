@@ -5,7 +5,7 @@ use Phinx\Migration\AbstractMigration;
 /**
  * Initial Pages
  */
-class Initial extends AbstractMigration
+class InitialPages extends AbstractMigration
 {
     /**
      * Change Method.
