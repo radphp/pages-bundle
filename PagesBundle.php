@@ -3,19 +3,20 @@
 namespace Pages;
 
 use Admin\Library\Menu;
-use Rad\Core\Bundle;
+use Rad\Core\AbstractBundle;
 
 /**
- * Pages Bootstrap
+ * Pages Bundle
  *
  * @package Pages
  */
-class Bootstrap extends Bundle
+class PagesBundle extends AbstractBundle
 {
+    /**
+     * {@inheritdoc}
+     */
     public function startup()
     {
-        parent::startup();
-
         $this->getEventManager()->attach(Menu::EVENT_GET_MENU, [$this, 'addAdminMenu']);
     }
 
