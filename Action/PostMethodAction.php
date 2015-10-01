@@ -14,6 +14,8 @@ use Rad\Network\Http\Response\RedirectResponse;
  */
 class PostMethodAction extends AppAction
 {
+    public $needsAuthentication = true;
+
     /**
      * {@inheritdoc}
      *

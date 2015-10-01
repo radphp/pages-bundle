@@ -24,7 +24,7 @@ class Form
             $data = $page->toArray();
         }
 
-        $action = $page ? Container::get('router')->generateUrl(['pages', $data['id']]) :
+        $action = $page ? Container::get('router')->generateUrl(['pages', $data['slug']]) :
             Container::get('router')->generateUrl(['pages']);
 
         $formFactory = Forms::createFormFactory();
@@ -34,9 +34,18 @@ class Form
         ];
 
         return $formFactory->createBuilder('form', $data, $options)
-            ->add('slug', 'text', ['required' => true])
-            ->add('title', 'text', ['required' => true])
-            ->add('body', 'textarea', ['required' => true])
+            ->add('title', 'text', ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add('slug', 'text', ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add(
+                'body',
+                'textarea',
+                [
+                    'required' => true,
+                    'attr' => [
+                        'class' => 'form-control wysiwyg'
+                    ]
+                ]
+            )
             ->add('submit', 'submit')
             ->getForm();
     }

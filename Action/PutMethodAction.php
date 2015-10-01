@@ -5,6 +5,7 @@ namespace Pages\Action;
 use App\Action\AppAction;
 use Cake\ORM\TableRegistry;
 use Rad\Network\Http\Response;
+use Rad\Network\Http\Response\RedirectResponse;
 
 /**
  * Index Action
@@ -13,11 +14,19 @@ use Rad\Network\Http\Response;
  */
 class PutMethodAction extends AppAction
 {
-    public function __invoke($id)
+    public $needsAuthentication = true;
+
+    public function __invoke($slug)
     {
         $formValues = $this->getRequest()->getParsedBody()['form'];
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
+
+        $page = $pagesTable->find()
+            ->where(['slug' => $slug])
+            ->first();
+
+        $id = $page['id'];
 
         $page = $pagesTable->newEntity(
             [

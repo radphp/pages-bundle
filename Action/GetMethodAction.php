@@ -18,30 +18,33 @@ use Twig\Library\Helper as TwigHelper;
  */
 class GetMethodAction extends AppAction
 {
-    public function __invoke($id = '', $action = '')
+    public function __invoke($slug = '', $action = '')
     {
-
         switch ($action) {
             case 'edit':
-                $this->edit($id);
+                $this->edit($slug);
                 break;
             default:
-                $this->generateDatatable($id);
+                if ($slug) {
+                    $this->singleBusiness($slug);
+                } else {
+                    $this->generateDatatable();
+                }
         }
     }
 
-    private function edit($id)
+    private function edit($slug)
     {
         $pagesTable = TableRegistry::get('Pages.Pages');
 
         $page = $pagesTable->find()
-            ->where(['id' => $id])
+            ->where(['slug' => $slug])
             ->first();
 
         $this->getResponder()->setData('form', Form::getForm($page));
     }
 
-    private function generateDatatable($id)
+    private function generateDatatable()
     {
         TwigHelper::addCss('file:///Admin/vendor/datatables/media/css/jquery.dataTables.min.css', 100);
         TwigHelper::addJs('file:///Admin/vendor/jquery/dist/jquery.min.js', 20);
@@ -61,25 +64,18 @@ class GetMethodAction extends AppAction
 
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
-
-        $page = [];
-        if ($id) {
-            $page = $pagesTable->find()
-                ->where(['id' => $id])
-                ->first();
-        }
-
         $pages = $pagesTable->find();
 
         $table = new Table();
-        $col = new Column();
-        $col->setTitle('Slug')
-            ->setData('Pages.slug');
-        $table->addColumn($col);
 
         $col = new Column();
         $col->setTitle('Title')
             ->setData('Pages.title');
+        $table->addColumn($col);
+
+        $col = new Column();
+        $col->setTitle('Slug')
+            ->setData('Pages.slug');
         $table->addColumn($col);
 
         $router = $this->getRouter();
@@ -91,13 +87,13 @@ class GetMethodAction extends AppAction
                     $action->addAction(
                         'edit',
                         'Edit',
-                        $router->generateUrl(['pages', $page->get('id'), 'edit'])
+                        $router->generateUrl(['pages', $page->get('slug'), 'edit'])
                     );
 
                     $action->addAction(
                         'delete',
                         'Delete',
-                        'javascript:deletePage("' . $page->get('id') . '");'
+                        'javascript:deletePage("' . $page->get('slug') . '");'
                     );
                 }
             }
@@ -113,6 +109,18 @@ class GetMethodAction extends AppAction
 
         $this->getResponder()->setData('table', $table->render());
         $this->getResponder()->setData('pages', $pages);
+    }
+
+
+    private function singleBusiness($slug)
+    {
+        /** @var \Cake\ORM\Table $pagesTable */
+        $pagesTable = TableRegistry::get('Pages.Pages');
+
+        $page = $pagesTable->find()
+            ->where(['slug' => $slug])
+            ->first();
+
         $this->getResponder()->setData('page', $page);
     }
 }

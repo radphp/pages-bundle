@@ -13,11 +13,13 @@ use Rad\Network\Http\Response;
  */
 class DeleteMethodAction extends AppAction
 {
-    public function __invoke($id)
+    public $needsAuthentication = true;
+
+    public function __invoke($slug)
     {
         /** @var \Cake\ORM\Table $pagesTable */
         $pagesTable = TableRegistry::get('Pages.Pages');
 
-        return new Response($pagesTable->deleteAll(['id' => $id]));
+        return new Response($pagesTable->deleteAll(['slug' => $slug]));
     }
 }
