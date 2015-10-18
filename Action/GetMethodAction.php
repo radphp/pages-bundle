@@ -8,6 +8,7 @@ use Cake\ORM\TableRegistry;
 use DataTable\Column;
 use DataTable\DataSource\ServerSide\CakePHP;
 use DataTable\Table;
+use Pages\Event\Pages;
 use Pages\Library\Form;
 use Twig\Library\Helper as TwigHelper;
 
@@ -20,6 +21,8 @@ class GetMethodAction extends AppAction
 {
     public function __invoke($slug = '', $action = '')
     {
+        $this->getEventManager()->dispatch(Pages::EVENT_BEFORE_GET_ACTION, $this);
+
         switch ($action) {
             case 'edit':
                 $this->edit($slug);
@@ -31,6 +34,8 @@ class GetMethodAction extends AppAction
                     $this->generateDatatable();
                 }
         }
+
+        $this->getEventManager()->dispatch(Pages::EVENT_AFTER_GET_ACTION, $this);
     }
 
     private function edit($slug)
