@@ -2,8 +2,8 @@
 
 namespace Pages;
 
-use Admin\Library\Menu;
 use Rad\Core\AbstractBundle;
+use Rad\Stuff\Admin\Menu;
 
 /**
  * Pages Bundle
@@ -25,8 +25,22 @@ class PagesBundle extends AbstractBundle
      */
     public function addAdminMenu()
     {
-        $parent = Menu::addMenu('Pages', 'fa-file-text');
-        Menu::addMenu('Pages', '', '/admin/bundles/pages', 100, $parent);
-        Menu::addMenu('Add Page', '', '/admin/bundles/pages/new', 110, $parent);
+        $menuItem1 = (new Menu())
+            ->setLabel('Pages')
+            ->setLink('/admin/bundles/pages')
+            ->setOrder(100);
+
+        $menuItem2 = (new Menu())
+            ->setLabel('Add Bussiness')
+            ->setLink('/admin/bundles/pages/new')
+            ->setOrder(110);
+
+        $root = new Menu();
+        $root->setLabel('Pages')
+            ->setIcon('fa-file-text')
+            ->setOrder(50)
+            ->addChild($menuItem1)
+            ->addChild($menuItem2)
+            ->setAsRoot();
     }
 }
