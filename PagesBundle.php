@@ -31,7 +31,7 @@ class PagesBundle extends AbstractBundle
             ->setOrder(100);
 
         $menuItem2 = (new Menu())
-            ->setLabel('Add Bussiness')
+            ->setLabel('Add Page')
             ->setLink('/admin/bundles/pages/new')
             ->setOrder(110);
 
