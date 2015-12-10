@@ -4,6 +4,7 @@ namespace Pages\Action;
 
 use App\Action\AppAction;
 use Cake\ORM\TableRegistry;
+use Pages\Library\AuthorizationTrait;
 use Rad\Network\Http\Response;
 use Rad\Network\Http\Response\RedirectResponse;
 
@@ -14,6 +15,8 @@ use Rad\Network\Http\Response\RedirectResponse;
  */
 class PutMethodAction extends AppAction
 {
+    use AuthorizationTrait;
+
     public $needsAuthentication = true;
 
     public function __invoke($slug)

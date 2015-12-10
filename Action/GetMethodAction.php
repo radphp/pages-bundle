@@ -9,6 +9,7 @@ use DataTable\Column;
 use DataTable\DataSource\ServerSide\CakePHP;
 use DataTable\Table;
 use Pages\Event\Pages;
+use Pages\Library\AuthorizationTrait;
 use Pages\Library\Form;
 use Twig\Library\Helper as TwigHelper;
 
@@ -19,6 +20,8 @@ use Twig\Library\Helper as TwigHelper;
  */
 class GetMethodAction extends AppAction
 {
+    use AuthorizationTrait;
+
     public function __invoke($slug = '', $action = '')
     {
         $this->getEventManager()->dispatch(Pages::EVENT_BEFORE_GET_ACTION, $this);

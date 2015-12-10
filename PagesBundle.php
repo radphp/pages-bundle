@@ -41,6 +41,7 @@ class PagesBundle extends AbstractBundle
             ->setOrder(50)
             ->addChild($menuItem1)
             ->addChild($menuItem2)
+            ->setResources(['pages.manage'])
             ->setAsRoot();
     }
 }
