@@ -20,8 +20,6 @@ use Twig\Library\Helper as TwigHelper;
  */
 class GetMethodAction extends AppAction
 {
-    use AuthorizationTrait;
-
     public function __invoke($slug = '', $action = '')
     {
         $this->getEventManager()->dispatch(Pages::EVENT_BEFORE_GET_ACTION, $this);
